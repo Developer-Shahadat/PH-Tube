@@ -24,7 +24,12 @@ const handleLoadVideo = async (dataLoadId) => {
         const div = document.createElement('div');
         div.innerHTML = `
         <div class="card w-72 bg-base-100 shadow-xl mt-4 pb-8">
-            <figure><img class= "h-[162px] w-[266px]" src= ${dynamicData?.thumbnail} /></figure>
+            <div class=" flex relative">
+            <figure><img class="h-[162px] w-[266px]" src= ${dynamicData?.thumbnail} /></figure>
+            <div class ="absolute mx-44 mt-32 w-20 bg-black text-white">
+            <p>${dynamicData?.others.posted_date}</p>
+            </div>
+            </div>
             <div class="mt-2 ">
                 
                 <div class="avatar-group ">
@@ -44,11 +49,8 @@ const handleLoadVideo = async (dataLoadId) => {
             
         </div>
         `
-        
         cardContainer.appendChild(div);
-        
     });
-    
 }
 handleCategory();
 handleLoadVideo("1000","1001","1003")
