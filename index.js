@@ -7,7 +7,7 @@ const handleCategory = async () => {
         const div = document.createElement('div');
         div.innerHTML = `
         <div class="tabs ">
-            <btn onclick = "handleLoadVideo('${category.category_id}')" class="btn hover:bg-red-400">${category.category}</btn> 
+            <btn onclick = "handleLoadVideo('${category.category_id}')" class="btn hover:bg-red-400">${category.category}</btn>
         </div>
         `
         tabContainer.appendChild(div);
@@ -41,10 +41,14 @@ const handleLoadVideo = async (dataLoadId) => {
             <p>${dynamicData?.authors[0].verified? "<img class='w-6' src='icons/check.jpg'/>" :  "" }</p>
             </div>
             <p class ="mx-14 text-sm  text-gray-400 font-medium" >${dynamicData.others.views}  views</p>
+            
         </div>
         `
+        
         cardContainer.appendChild(div);
+        
     });
+    
 }
 handleCategory();
-handleLoadVideo()
+handleLoadVideo("1000","1001","1003")
