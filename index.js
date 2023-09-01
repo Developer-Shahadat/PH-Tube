@@ -1,33 +1,52 @@
+let fetchVideo = []
 const handleCategory = async () => {
     const res = await fetch ('https://openapi.programming-hero.com/api/videos/categories');
     const data = await res.json();
-    // console.log(data.data);
     const tabContainer = document.getElementById('tab-container');
     data.data.slice(0,4).forEach((category)=>{
         const div = document.createElement('div');
         div.innerHTML = `
         <div class="tabs ">
-            <btn onclick = "handleLoadVideo('${category.category_id}')" class="btn hover:bg-red-400">${category.category}</btn>
+            <btn onclick = "handleLoadData('${category.category_id}')" class="btn hover:bg-red-400">${category.category}</btn>
         </div>
         `
         tabContainer.appendChild(div);
     });
 }
 
-const handleLoadVideo = async (dataLoadId) => {
+
+const handleLoadData = async (dataLoadId) => {
     const res = await fetch (`https://openapi.programming-hero.com/api/videos/category/${dataLoadId}`);
     const data = await res.json();
     console.log(data.data);
     const cardContainer = document.getElementById('card-container');
-    cardContainer.innerHTML = ``
+   
+    cardContainer.innerHTML = ``;
+
+    const container = document.getElementById('container')
+        container.innerHTML = ""
+    if(data.data.length === 0){
+        const div = document.createElement('div');
+        div.innerHTML =`
+        <img src="icons/Icon.png" />
+        <p>Oops!! Sorry, There is no content here</p>
+        `
+        container.appendChild(div);
+    }
+    
+    
     data.data.forEach((dynamicData)=>{
         const div = document.createElement('div');
+        const postedDate = dynamicData?.others.posted_date;
+        const hours = Math.floor(postedDate / 3600);
+        const minutes = Math.floor(hours / 60);
+        // console.log(hours,minutes);
         div.innerHTML = `
         <div class="card w-72 bg-base-100 shadow-xl mt-4 pb-8">
             <div class=" flex relative">
             <figure><img class="h-[162px] w-[266px]" src= ${dynamicData?.thumbnail} /></figure>
-            <div class ="absolute mx-44 mt-32 w-20 bg-black text-white">
-            <p>${dynamicData?.others.posted_date}</p>
+            <div class ="absolute mx-36 mt-28 w-28 bg-black text-white">
+            <p>${hours}hrs ${minutes}mins ago</p>
             </div>
             </div>
             <div class="mt-2 ">
@@ -51,6 +70,11 @@ const handleLoadVideo = async (dataLoadId) => {
         `
         cardContainer.appendChild(div);
     });
+   
 }
+
+
+
 handleCategory();
-handleLoadVideo("1000","1001","1003")
+handleLoadData("1000","1001","1003")
+
