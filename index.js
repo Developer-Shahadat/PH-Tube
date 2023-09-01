@@ -28,7 +28,7 @@ const handleLoadData = async (dataLoadId) => {
     if(data.data.length === 0){
         const div = document.createElement('div');
         div.innerHTML =`
-        <img class ="ml-[550px]" src="icons/Icon.png" />
+        <img class ="lg:ml-[550px]" src="icons/Icon.png" />
         <p class ="mt-2 font-semibold text-3xl">Oops!! Sorry, There is no <br> content here</p>
         `
         container.appendChild(div);
@@ -38,15 +38,19 @@ const handleLoadData = async (dataLoadId) => {
     data.data.forEach((dynamicData)=>{
         const div = document.createElement('div');
         const postedDate = dynamicData?.others.posted_date;
-        const hours = Math.floor(postedDate / 3600);
-        const minutes = Math.floor(postedDate % 60);
+       const postTotalMinutes = Math.floor( dynamicData?.others.posted_date / 60);
+
+        const seconds = dynamicData?.others.posted_date % 60;
+        const hours = Math.floor(postTotalMinutes / 60);
+        const minutes = postTotalMinutes % 60;
+            
         // console.log(hours,minutes);
         div.innerHTML = `
         <div class="card w-72 bg-base-100 shadow-xl mt-4 pb-8">
             <div class=" flex relative">
             <figure><img class="h-[162px] w-[266px]" src= ${dynamicData?.thumbnail} /></figure>
-            <div class ="absolute mx-32 mt-28 w-32 bg-black text-white">
-            <p>${hours}hrs ${minutes}mins ago</p>
+            <div class ="absolute mx-28 mt-28 w-36 bg-black text-white">
+            <p class ="text-sm">${hours}hrs ${minutes}mins ago</p>
             </div>
             </div>
             <div class="mt-2 ">
