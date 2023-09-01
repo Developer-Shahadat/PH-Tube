@@ -18,7 +18,7 @@ const handleCategory = async () => {
 const handleLoadData = async (dataLoadId) => {
     const res = await fetch (`https://openapi.programming-hero.com/api/videos/category/${dataLoadId}`);
     const data = await res.json();
-    console.log(data.data);
+    // console.log(data.data);
     const cardContainer = document.getElementById('card-container');
    
     cardContainer.innerHTML = ``;
@@ -28,8 +28,8 @@ const handleLoadData = async (dataLoadId) => {
     if(data.data.length === 0){
         const div = document.createElement('div');
         div.innerHTML =`
-        <img src="icons/Icon.png" />
-        <p>Oops!! Sorry, There is no content here</p>
+        <img class ="ml-[550px]" src="icons/Icon.png" />
+        <p class ="mt-2 font-semibold text-3xl">Oops!! Sorry, There is no <br> content here</p>
         `
         container.appendChild(div);
     }
@@ -39,13 +39,13 @@ const handleLoadData = async (dataLoadId) => {
         const div = document.createElement('div');
         const postedDate = dynamicData?.others.posted_date;
         const hours = Math.floor(postedDate / 3600);
-        const minutes = Math.floor(hours / 60);
+        const minutes = Math.floor(postedDate % 60);
         // console.log(hours,minutes);
         div.innerHTML = `
         <div class="card w-72 bg-base-100 shadow-xl mt-4 pb-8">
             <div class=" flex relative">
             <figure><img class="h-[162px] w-[266px]" src= ${dynamicData?.thumbnail} /></figure>
-            <div class ="absolute mx-36 mt-28 w-28 bg-black text-white">
+            <div class ="absolute mx-32 mt-28 w-32 bg-black text-white">
             <p>${hours}hrs ${minutes}mins ago</p>
             </div>
             </div>
@@ -60,9 +60,9 @@ const handleLoadData = async (dataLoadId) => {
 
                 <h2 class="text-center mt-3 mx-2 font-medium">${dynamicData?.title}</h2>
             </div>
-            <div class ="flex"> 
+            <div class ="flex item-center"> 
             <p class="mx-14 font-medium text-gray-400">${dynamicData.authors[0].profile_name}</p>
-            <p>${dynamicData?.authors[0].verified? "<img class='w-6' src='icons/check.jpg'/>" :  "" }</p>
+            <p>${dynamicData?.authors[0].verified? "<img class='' src='icons/check-2.jpg'/>" :  "" }</p>
             </div>
             <p class ="mx-14 text-sm  text-gray-400 font-medium" >${dynamicData.others.views}  views</p>
             
