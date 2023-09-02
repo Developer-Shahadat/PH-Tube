@@ -1,4 +1,3 @@
-let fetchVideo = []
 const handleCategory = async () => {
     const res = await fetch ('https://openapi.programming-hero.com/api/videos/categories');
     const data = await res.json();
@@ -18,7 +17,6 @@ const handleCategory = async () => {
 const handleLoadData = async (dataLoadId) => {
     const res = await fetch (`https://openapi.programming-hero.com/api/videos/category/${dataLoadId}`);
     const data = await res.json();
-    // console.log(data.data);
     const cardContainer = document.getElementById('card-container');
    
     cardContainer.innerHTML = ``;
@@ -34,17 +32,16 @@ const handleLoadData = async (dataLoadId) => {
         container.appendChild(div);
     }
     
-    
     data.data.forEach((dynamicData)=>{
         const div = document.createElement('div');
-        const postedDate = dynamicData?.others.posted_date;
-       const postTotalMinutes = Math.floor( dynamicData?.others.posted_date / 60);
 
+        // Converted Second To Hours And Minutes
+        const postedDate = dynamicData?.others.posted_date;
+        const postTotalMinutes = Math.floor( dynamicData?.others.posted_date / 60);
         const seconds = dynamicData?.others.posted_date % 60;
         const hours = Math.floor(postTotalMinutes / 60);
         const minutes = postTotalMinutes % 60;
             
-        // console.log(hours,minutes);
         div.innerHTML = `
         <div class="card w-72 bg-base-100  mt-4 pb-8">
             <div class=" flex relative">
@@ -77,8 +74,21 @@ const handleLoadData = async (dataLoadId) => {
    
 }
 
+// Sort button
+const sortView =async () =>{
+    const res = await fetch(`https://openapi.programming-hero.com/api/videos/category/1000`)
+    const data =  await res.json();   
+    const videos = data.data;
+    
+    videos.forEach(view =>{
+        console.log(view.others.views);
+      
+    })
+    videos.sort((a,b) => b.others.views - a.others.views);
+   
+}
 
-
+// Function Call
 handleCategory();
 handleLoadData("1000","1001","1003")
 
